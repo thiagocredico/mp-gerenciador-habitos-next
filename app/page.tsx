@@ -1,5 +1,6 @@
 import DayState from "@/components/DayState";
 import DeleteButton from "@/components/DeleteButton";
+import Link from "next/link";
 
 export default function Home() {
   const habits = { 
@@ -54,6 +55,12 @@ export default function Home() {
               </section>
           </div>
         ))}
+        <Link
+        href="novo-habito"
+        className="fixed text-center bottom-10 w-2/3 left-1/2 -translate-x-1/2 text-neutral-900 bg-[#45EDAD] font-display font-regular text-2xl p-2 rounded-md"
+      >
+        novo hábito
+      </Link>
     </main>
   );
 }
