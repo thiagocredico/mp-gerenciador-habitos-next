@@ -1,6 +1,7 @@
 import DayState from '@/components/DayState';
 import DeleteButton from '@/components/DeleteButton';
 import { kv } from '@vercel/kv';
+import { log } from 'console';
 import Link from 'next/link';
 
 export type Habits = {
@@ -29,13 +30,12 @@ export default async function Home() {
 
   return (
     <main className='container relative flex flex-col gap-8 px-4 pt-16'>
-      {habits === null ||
-        (Object.keys(habits).length === 0 && (
-          <h1 className='mt-20 text-4xl font-light text-white font-display text-center'>
-            Você não tem hábitos cadastrados
-          </h1>
-        ))}
-      {habits !== null &&
+      {habits === null || Object.keys(habits).length === 0 ? (
+        <h1 className='mt-20 text-4xl font-light text-white font-display text-center'>
+          Você não tem hábitos cadastrados
+        </h1>
+      ) : (
+      habits !== null &&
         Object.entries(habits).map(([habit, habitStreak]) => (
           <div key={habit} className='flex flex-col gap-2'>
             <div className='flex justify-between items-center'>
@@ -57,7 +57,8 @@ export default async function Home() {
               </section>
             </Link>
           </div>
-        ))}
+        ))
+      )}
       <Link
         href='novo-habito'
         className='fixed text-center bottom-10 w-2/3 left-1/2 -translate-x-1/2 text-neutral-900 bg-[#45EDAD] font-display font-regular text-2xl p-2 rounded-md'
