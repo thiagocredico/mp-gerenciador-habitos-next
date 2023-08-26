@@ -1,5 +1,6 @@
 "use client";
 
+import { toggleHabit } from "@/app/actions";
 import ArrowIcon from "@/components/ArrowIcon";
 import DayState from "@/components/DayState";
 import { useEffect, useState } from "react";
@@ -102,6 +103,14 @@ function Calendar({
           <div
             key={index}
             className="flex flex-col items-center p-2"
+            onClick={() =>
+                toggleHabit({
+                  habit,
+                  habitStreak,
+                  date: getDayString(day),
+                  done: habitStreak ? habitStreak[getDayString(day)] : true,
+                })
+              }
           >
             <span className="font-sans text-xs font-light text-neutral-400 text-center">
               {day?.getDate()}
