@@ -1,13 +1,14 @@
 import DayState from "@/components/DayState";
 import DeleteButton from "@/components/DeleteButton";
+import { kv } from "@vercel/kv";
 import Link from "next/link";
 
-export default function Home() {
-  const habits = { 
-    "Ler": [true, false, true, , false, true, false],
-    "Correr": [true, true, , true, false, true, ],
-    "Estudar": [false, , true, , false, false, true],
-  };
+export type Habits = {
+  [habit: string]: Record<string, boolean>;
+} | null;
+
+export default async function Home() {
+  const habits: Habits = await kv.hgetall("habits");
   
   const today = new Date();
   const todayWeekDay = today.getDay();
@@ -49,7 +50,7 @@ export default function Home() {
                     <span className="font-sans text-xs text-white text-center">
                       {day}
                     </span>
-                    <DayState day={habitStreak[index]} />
+                    <DayState day={habitStreak[last7Days[index]]} />
                   </div>
                 ))}
               </section>
