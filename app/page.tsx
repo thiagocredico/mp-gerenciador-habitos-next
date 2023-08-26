@@ -7,7 +7,23 @@ export default function Home() {
     "Correr": [true, true, , true, false, true, ],
     "Estudar": [false, , true, , false, false, true],
   };
+  
+  const today = new Date();
+  const todayWeekDay = today.getDay();
   const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+  const sortedWeekDays = weekDays
+    .slice(todayWeekDay + 1)
+    .concat(weekDays.slice(0, todayWeekDay + 1));
+
+  const last7Days = weekDays
+    .map((_, index) => {
+      const date = new Date();
+      date.setDate(date.getDate() - index);
+
+      return date.toISOString().slice(0, 10);
+    })
+    .reverse();
 
   return (
     <main className='container relative flex flex-col gap-8 px-4 pt-16'>
@@ -27,12 +43,11 @@ export default function Home() {
               <DeleteButton habit={habit} />
             </div>
               <section className="grid grid-cols-7 bg-neutral-800 rounded-md p-2">
-                {weekDays.map((day, index) => (
+                {sortedWeekDays.map((day, index) => (
                   <div key={day} className="flex flex-col last:font-bold">
                     <span className="font-sans text-xs text-white text-center">
                       {day}
                     </span>
-                    {/* day state */}
                     <DayState day={habitStreak[index]} />
                   </div>
                 ))}
